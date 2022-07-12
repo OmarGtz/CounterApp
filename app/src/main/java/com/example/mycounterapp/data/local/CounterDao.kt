@@ -14,7 +14,7 @@ interface CounterDao {
     @Query("SELECT * FROM COUNTER")
     fun getAllCounters(): List<CounterEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCounter(counter: CounterEntity)
 
     @Update
