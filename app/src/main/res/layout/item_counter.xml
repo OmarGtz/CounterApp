@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/Widget.App.CardView.Item"
+    android:layout_margin="@dimen/grid_2"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/grid_2"
+        >
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/grid_2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/grid_2" />
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            android:layout_marginEnd="@dimen/grid_1"
+            app:layout_constraintStart_toStartOf="@id/guideline_begin"
+            app:layout_constraintEnd_toStartOf="@+id/decrement"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Omar Gutierrez Santiago" />
+
+        <ImageButton
+            android:id="@+id/increment"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/add_circle"
+            android:background="?actionBarItemBackground"
+            app:layout_constraintStart_toEndOf="@id/counter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10"
+            android:minWidth="32dp"
+            android:textAlignment="center"
+            android:textAppearance="?textAppearanceCaption"
+            app:layout_constraintEnd_toStartOf="@id/increment"
+            app:layout_constraintStart_toEndOf="@+id/decrement"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/decrement"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?actionBarItemBackground"
+            android:src="@drawable/decrement"
+            app:layout_constraintEnd_toStartOf="@+id/counter"
+            app:layout_constraintStart_toEndOf="@+id/title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/remove"
+            android:background="?actionBarItemBackground"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
