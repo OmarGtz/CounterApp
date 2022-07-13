@@ -9,24 +9,38 @@ import com.example.mycounterapp.databinding.ItemCounterBinding
 import com.example.mycounterapp.domain.model.Counter
 
 class CounterAdapter(
-    private val incrementOnClick: () -> Unit,
-    private val decrementOnClick: () -> Unit
+    private val incrementOnClick: (Counter) -> Unit,
+    private val decrementOnClick: (Counter) -> Unit,
+    private val removeOnClick: (Counter) -> Unit,
+    private val shareOnClick: (Counter) -> Unit
 ) : ListAdapter<Counter, CounterAdapter.CounterViewHolder>(PeopleDiffCallback) {
 
     class CounterViewHolder(val binding: ItemCounterBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Counter, incrementOnClick: () -> Unit, decrementOnClick: () -> Unit) {
+        fun bind(
+            item: Counter,
+            incrementOnClick: (Counter) -> Unit,
+            decrementOnClick: (Counter) -> Unit,
+            removeOnClick: (Counter) -> Unit,
+            shareOnClick: (Counter) -> Unit
+        ) {
             binding.root.setOnClickListener {
                 onItemClicked(item, binding)
             }
             binding.title.text = item.title
             binding.counter.text = item.count.toString()
             binding.increment.setOnClickListener {
-                incrementOnClick()
+                incrementOnClick(item)
             }
             binding.decrement.setOnClickListener {
-                decrementOnClick()
+                decrementOnClick(item)
+            }
+            binding.remove.setOnClickListener {
+                removeOnClick(item)
+            }
+            binding.share.setOnClickListener {
+                shareOnClick(item)
             }
         }
 
@@ -48,7 +62,7 @@ class CounterAdapter(
 
     override fun onBindViewHolder(holder: CounterViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, incrementOnClick, decrementOnClick)
+        holder.bind(item, incrementOnClick, decrementOnClick, removeOnClick, shareOnClick)
     }
 }
 

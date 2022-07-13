@@ -12,11 +12,11 @@ import javax.inject.Inject
  *
  * @author (c) 2022
  */
-class RemoveCounterUseCase @Inject constructor(private val repository: CounterRepository, @IoDispatcher dispatcher: CoroutineDispatcher): UseCase<String, List<Counter>>(dispatcher) {
+class RemoveCounterUseCase @Inject constructor(private val repository: CounterRepository, @IoDispatcher dispatcher: CoroutineDispatcher): UseCase<Counter, List<Counter>>(dispatcher) {
     /**
      * Override this to set the code to be executed.
      */
-    override suspend fun execute(parameters: String): List<Counter> {
+    override suspend fun execute(parameters: Counter): List<Counter> {
         return repository.removeCounter(parameters)
     }
 

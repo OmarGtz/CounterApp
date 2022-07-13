@@ -69,10 +69,10 @@ class CounterViewModel @Inject constructor(
         }
     }
 
-    fun removeCounter(id: String) {
+    fun removeCounter(counter: Counter) {
         viewModelScope.launch {
             _loading.value = true
-            when (val result = removeCounterUseCase(id)) {
+            when (val result = removeCounterUseCase(counter)) {
                 is CounterResult.Success -> _counters.value = result.data!!
                 is CounterResult.Error -> _error.value = result.exception.message
             }

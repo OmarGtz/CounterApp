@@ -18,7 +18,9 @@ class CounterApiDataSource @Inject constructor(private val apiService: CounterAp
     }
 
     override suspend fun addCounter(name: String): ApiResponse<List<CounterDto>> {
-        return apiService.addCounter(mapOf(pair = Pair("title", name))).handleResult()
+        val params = mutableMapOf<String, String>()
+        params["title"] = name
+        return apiService.addCounter(params).handleResult()
     }
 
     override suspend fun incCounter(id: String): ApiResponse<List<CounterDto>> {

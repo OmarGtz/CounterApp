@@ -8,8 +8,8 @@ import com.example.mycounterapp.data.model.ApiErrorResponse
 import com.example.mycounterapp.data.model.ApiSuccessResponse
 import com.example.mycounterapp.data.model.CounterDto
 import com.example.mycounterapp.data.remote.CounterRemoteDataSource
-import com.example.mycounterapp.domain.model.Counter
 import com.example.mycounterapp.domain.error.EmptyCountersError
+import com.example.mycounterapp.domain.model.Counter
 import javax.inject.Inject
 
 /**
@@ -69,7 +69,7 @@ class CounterRepositoryImpl @Inject constructor(
             is ApiErrorResponse -> throw IllegalStateException("Not save counter")
             is ApiEmptyResponse -> throw EmptyCountersError()
             is ApiSuccessResponse -> {
-                val counterUpdated = newCounters.body.find { it.id == id}
+                val counterUpdated = newCounters.body.find { it.id == id }
                 counterUpdated?.let {
                     localDataSource.updateCounter(CounterEntity(it.id, it.title, it.count))
                     return newCounters.body.map { counterDto ->
@@ -90,7 +90,7 @@ class CounterRepositoryImpl @Inject constructor(
             is ApiErrorResponse -> throw IllegalStateException("Not save counter in remote")
             is ApiEmptyResponse -> throw EmptyCountersError()
             is ApiSuccessResponse -> {
-                val counterUpdated = newCounters.body.find { it.id == id}
+                val counterUpdated = newCounters.body.find { it.id == id }
                 counterUpdated?.let {
                     localDataSource.updateCounter(CounterEntity(it.id, it.title, it.count))
                     return newCounters.body.map { counterDto ->
@@ -106,30 +106,33 @@ class CounterRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun removeCounter(id: String): List<Counter> {
-        when (val newCounters = remoteDataSource.removeCounter(id)) {
+    override suspend fun removeCounter(counter: Counter): List<Counter> {
+        when (val newCounters = remoteDataSource.removeCounter(counter.id)) {
             is ApiErrorResponse -> throw IllegalStateException("Not save counter")
             is ApiEmptyResponse -> throw EmptyCountersError()
             is ApiSuccessResponse -> {
-                val counterRemoved = newCounters.body.find { it.id == id}
-                counterRemoved?.let {
-                    localDataSource.removeCounter(CounterEntity(it.id, it.title, it.count))
-                    return newCounters.body.map { counterDto ->
-                        Counter(
-                            counterDto.id,
-                            counterDto.title,
-                            counterDto.count
-                        )
-                    }
+                localDataSource.removeCounter(
+                    CounterEntity(
+                        counter.id,
+                        counter.title,
+                        counter.count
+                    )
+                )
+                return newCounters.body.map { counterDto ->
+                    Counter(
+                        counterDto.id,
+                        counterDto.title,
+                        counterDto.count
+                    )
                 }
-                throw IllegalStateException("Not increment new counter")
             }
         }
     }
 
-    private suspend fun refreshLocalDataSource(counters: List<CounterDto>) {
-        counters.map {
-            localDataSource.addCounter(CounterEntity(it.id, it.title, it.count))
-        }
+
+private suspend fun refreshLocalDataSource(counters: List<CounterDto>) {
+    counters.map {
+        localDataSource.addCounter(CounterEntity(it.id, it.title, it.count))
     }
+}
 }

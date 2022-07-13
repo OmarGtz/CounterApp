@@ -17,6 +17,6 @@ interface CounterRepository {
 
     suspend fun decrementCounter(id: String): List<Counter>
 
-    suspend fun removeCounter(id: String): List<Counter>
+    suspend fun removeCounter(counter: Counter): List<Counter>
 
 }
